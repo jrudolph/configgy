@@ -1,7 +1,7 @@
 import sbt._
 import com.twitter.sbt._
 
-class ConfiggyProject(info: ProjectInfo) extends StandardProject(info) with SubversionPublisher {
+class ConfiggyProject(info: ProjectInfo) extends DefaultProject(info) {
   val specs = "org.scala-tools.testing" % "specs_2.9.0-1" % "1.6.8" % "test"
   val json = buildScalaVersion match {
     case "2.7.7" => "com.twitter" % "json" % "1.1.7"
@@ -18,5 +18,7 @@ class ConfiggyProject(info: ProjectInfo) extends StandardProject(info) with Subv
       </license>
     </licenses>
 
-  override def subversionRepository = Some("http://svn.local.twitter.com/maven-public")
+  override def managedStyle = ManagedStyle.Auto
+  override def disableCrossPaths = true
+  val twitterRepo = "twitter.com" at "http://maven.twttr.com/"
 }
